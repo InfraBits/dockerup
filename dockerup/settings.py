@@ -33,6 +33,7 @@ import yaml
 logger: logging.Logger = logging.getLogger(__name__)
 
 SUPPORTED_IMAGES = {
+    'ghcr.io/infrabits/python3-alpine': 'InfraBits/python3-alpine',
     'ghcr.io/infrabits/python3-alpine-3.10': 'InfraBits/python3-alpine',
     'ghcr.io/infrabits/python3-alpine-3.11': 'InfraBits/python3-alpine',
     'ghcr.io/infrabits/python3-alpine-3.12': 'InfraBits/python3-alpine',
