@@ -64,4 +64,5 @@ class Settings:
         return Settings(
             files=settings['files'],
             workflows=settings['workflows'],
+            supported_images=settings['supported_images'],
         )
