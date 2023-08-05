@@ -26,24 +26,19 @@ SOFTWARE.
 import logging
 from dataclasses import dataclass
 from pathlib import PosixPath
-from typing import List
+from typing import List, Dict
 
 import yaml
 
 logger: logging.Logger = logging.getLogger(__name__)
 
-SUPPORTED_IMAGES = {
-    'ghcr.io/infrabits/python3-alpine': 'InfraBits/python3-alpine',
-    'ghcr.io/infrabits/python3-alpine-3.10': 'InfraBits/python3-alpine',
-    'ghcr.io/infrabits/python3-alpine-3.11': 'InfraBits/python3-alpine',
-    'ghcr.io/infrabits/python3-alpine-3.12': 'InfraBits/python3-alpine',
-}
 
 
 @dataclass(init=True, frozen=True)
 class Settings:
     files: List[str]
     workflows: List[str]
+    supported_images: Dict[str, str]
 
     @staticmethod
     def load(path: PosixPath) -> 'Settings':
@@ -51,6 +46,12 @@ class Settings:
         settings = {
             'files': ['docker/Dockerfile'],
             'workflows': ['CI'],
+            'supported_images': {
+                'ghcr.io/infrabits/python3-alpine': 'InfraBits/python3-alpine',
+                'ghcr.io/infrabits/python3-alpine-3.10': 'InfraBits/python3-alpine',
+                'ghcr.io/infrabits/python3-alpine-3.11': 'InfraBits/python3-alpine',
+                'ghcr.io/infrabits/python3-alpine-3.12': 'InfraBits/python3-alpine',
+            },
         }
 
         if settings_path.is_file():

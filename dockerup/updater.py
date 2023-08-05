@@ -29,7 +29,7 @@ from typing import List, Optional, Dict
 
 from dockerup.github import GithubApp, GitHubApi
 from dockerup.models import File, Image, Update
-from dockerup.settings import Settings, SUPPORTED_IMAGES
+from dockerup.settings import Settings
 
 logger: logging.Logger = logging.getLogger(__name__)
 
@@ -46,7 +46,7 @@ class Updater:
         self._latest_tags: Dict[str, str] = {}
 
     def _get_latest_tag(self, image: str) -> str:
-        repo = SUPPORTED_IMAGES[image]
+        repo = self._settings.supported_images[image]
         if repo not in self._latest_tags:
             latest_tag = GitHubApi(repo, 'main', self._github_app).get_latest_release()
             assert latest_tag is not None
@@ -84,7 +84,7 @@ class Updater:
         for file in self._files:
             updates = []
             for image in file.images:
-                if image.image not in SUPPORTED_IMAGES:
+                if image.image not in self._settings.supported_images:
                     logger.info(f'Skipping: {image}')
                     continue
                 latest_tag = self._get_latest_tag(image.image)
